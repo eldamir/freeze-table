@@ -37,6 +37,19 @@ class FreezeTable extends HTMLElement {
                     "--TableContainer-columnInset",
                     `${columnInset}`
                 );
+                
+                const colspan = cell.getAttribute("colspan");
+                if (!!colspan) {
+                    const inherentWidth = cell.offsetWidth;
+                    const containerWidth = this.offsetWidth;
+                    let targetWidth = inherentWidth + columnInset;
+                    targetWidth = Math.min(targetWidth, containerWidth);
+                    console.log(`Cell has colspan of ${colspan}`);
+                    console.log(`inherentWidth: ${inherentWidth}`);
+                    console.log(`containerWidth: ${containerWidth}`);
+                    console.log(`targetWidth: ${targetWidth}`);
+                    cell.style.width = `${targetWidth}px`;
+                }
             }
 
             // using subpixel values should help avoid tearing issues when zooming (offsetWidth = full pixels only)
