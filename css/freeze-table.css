@@ -1,0 +1,35 @@
+freeze-table {
+    border: 3px double rebeccapurple;
+    contain: content;
+    display: grid;
+    overflow-x: auto;
+    resize: both;
+
+    & > table {
+        border-collapse: collapse;
+        width: max-content;
+
+        & :where(:is(thead, tfoot) th) {
+            background: wheat;
+            inset-block-start: 0;
+            position: sticky;
+        }
+    }
+
+    & [style*="--TableContainer-columnInset:"] {
+        background: color-mix(in oklch, rebeccapurple, wheat 12.5%);
+        color: white;
+        inset-inline-start: calc(var(--TableContainer-columnInset, 0) * 1px);
+        position: sticky;
+
+        th& {
+            background: rebeccapurple;
+            z-index: 1;
+        }
+    }
+}
+
+th,
+td {
+    padding: 2rem;
+}
