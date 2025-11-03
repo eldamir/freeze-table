@@ -7,7 +7,6 @@ class FreezeTable extends HTMLElement {
     connectedCallback() {
         const table = this.querySelector("table");
         if (!table) {
-            console.log("No table found");
             return;
         }
 
@@ -21,12 +20,10 @@ class FreezeTable extends HTMLElement {
                 colFlags.push(new Set(flags));
             }
         }
-        console.log(colFlags);
 
         // this logic could be improved by looping through all table.rows and their cells
         for (let i = 0, columnInset = 0; i < colFlags.length; i++) {
             if (!colFlags[i].has("freeze")) continue;
-            console.log(`Index ${colFlags[i]} has freeze`);
 
             // in rare cases the main headings are in tfoot instead of thead
             const th = table.querySelector(`:is(thead, tfoot) > tr > :nth-child(${i + 1})`);

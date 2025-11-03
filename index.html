@@ -8,6 +8,9 @@
   <link rel="stylesheet" href="css/freeze-table.css">
 </head>
 <body>
+
+<h1>Naiive approach with just CSS</h1>
+
 1 Frozen column: 👌
 
 <div class="freezable-wrapper">
@@ -1161,7 +1164,8 @@ I.e. if the colspan setting causes the cell to be wider than the scroll containe
 
 <hr>
 
-<p>Resize the table to smaller size!</p>
+<h1>Custom element approach with JavaScript</h1>
+
 <div class="freezable-wrapper">
 <freeze-table>
   <table>
@@ -1340,6 +1344,98 @@ I.e. if the colspan setting causes the cell to be wider than the scroll containe
 </freeze-table>
 </div>
 
+
+<p>With colspan</p>
+<div class="freezable-wrapper">
+  <freeze-table>
+    <table>
+      <colgroup>
+        <col span="2" data-col="freeze">
+        <col span="4">
+        <col data-col="freeze">
+      </colgroup>
+      <thead>
+      <tr>
+        <th colspan="10">SUPERHEADER</th>
+      </tr>
+      <tr>
+        <th>Test</th>
+        <th>This is a long one</th>
+        <th>More</th>
+        <th>Ok enough</th>
+        <th>More</th>
+        <th>Ok enough</th>
+        <th>More</th>
+        <th>Ok enough</th>
+        <th>More</th>
+        <th>Ok enough</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>One</td>
+        <td>1</td>
+        <td>A</td>
+        <td>one a</td>
+        <td>A</td>
+        <td>one a</td>
+        <td>A</td>
+        <td>one a</td>
+        <td>A</td>
+        <td>one a</td>
+      </tr>
+      <tr>
+        <td>One</td>
+        <td>1</td>
+        <td>A</td>
+        <td>one a</td>
+        <td>A</td>
+        <td>one a</td>
+        <td>A</td>
+        <td>one a</td>
+        <td>A</td>
+        <td>one a</td>
+      </tr>
+      <tr>
+        <td>One</td>
+        <td>1</td>
+        <td>A</td>
+        <td>one a</td>
+        <td>A</td>
+        <td>one a</td>
+        <td>A</td>
+        <td>one a</td>
+        <td>A</td>
+        <td>one a</td>
+      </tr>
+      <tr>
+        <td>One</td>
+        <td>1</td>
+        <td>A</td>
+        <td>one a</td>
+        <td>A</td>
+        <td>one a</td>
+        <td>A</td>
+        <td>one a</td>
+        <td>A</td>
+        <td>one a</td>
+      </tr>
+      <tr>
+        <td>One</td>
+        <td>1</td>
+        <td>A</td>
+        <td>one a</td>
+        <td>A</td>
+        <td>one a</td>
+        <td>A</td>
+        <td>one a</td>
+        <td>A</td>
+        <td>one a</td>
+      </tr>
+      </tbody>
+    </table>
+  </freeze-table>
+</div>
 
 <script src="js/freeze-table.js"></script>
 </body>
