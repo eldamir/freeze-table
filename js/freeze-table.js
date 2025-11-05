@@ -1,34 +1,39 @@
 // lacking features:
 // 1. update on resize
-// 2. what if the table cells have colspan?
-// 3. update on DOM changes to colgroup cols
 
 class FreezeTable extends HTMLElement {
+  colFlags;
+
   connectedCallback() {
     const table = this.querySelector("table");
     if (!table) {
       return;
     }
 
-    const colFlags = [];
+    this.setupMutationObserver(table);
+
+    this.colFlags = [];
     // repurpose existing colgroup to hold new data
     for (const col of table.querySelectorAll("col")) {
       // treat data-col as if it is a classList of sorts
       const flags = (col.dataset.col || "").split(" ");
       // create new Set for each item so each column has it's own data
       for (let i = 0; i < col.span; i++) {
-        colFlags.push(new Set(flags));
+        this.colFlags.push(new Set(flags));
       }
     }
 
-    // this logic could be improved by looping through all table.rows and their cells
-    for (let i = 0, columnInset = 0; i < colFlags.length; i++) {
-      if (!colFlags[i].has("freeze")) continue;
+    this.setInsetStyles(table);
+  }
+
+  setInsetStyles(table) {
+    for (let i = 0, columnInset = 0; i < this.colFlags.length; i++) {
+      if (!this.colFlags[i].has("freeze")) continue;
 
       // in rare cases the main headings are in tfoot instead of thead
       let th = table.querySelector(`:is(thead, tfoot) > tr > :nth-child(${i + 1})`);
       if (!th) continue;
-      
+
       // If the th has colspan, we can't calculate the width properly here.
       // Instead, we need to find the next row where there isn't a colspan
       if (th.colSpan > 1) {
@@ -65,6 +70,35 @@ class FreezeTable extends HTMLElement {
       const {width} = th.getBoundingClientRect();
       columnInset += width;
     }
+  }
+
+  setupMutationObserver(targetNode) {
+    // Options for the observer (which mutations to observe)
+    const config = {
+      attributes: true,
+      childList: true,
+      subtree: true
+    };
+
+    // Callback function to execute when mutations are observed
+    const callback = (mutationList, observer) => {
+      for (const mutation of mutationList) {
+        if (mutation.type === 'childList') {
+          // Recalculate the inset styles if the contents of the table changes
+          this.setInsetStyles(targetNode);
+          return;
+        }
+      }
+    };
+
+    // Create an observer instance linked to the callback function
+    const observer = new MutationObserver(callback);
+
+    // Start observing the target node for configured mutations
+    observer.observe(targetNode, config);
+
+    // Later, you can stop observing
+    // observer.disconnect();
   }
 }
 

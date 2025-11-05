@@ -1,7 +1,7 @@
 .freezable-wrapper {
     /* Constrain the width and height for the sake of testing */
     max-height: 200px;
-    max-width: 600px;
+    max-width: 1200px;
     overflow-y: auto;
     margin-bottom: 1rem;
 }
